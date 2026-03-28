@@ -23,6 +23,259 @@ This is a memorial webpage for **Fabian "Haian" Schüßler** (born 30.10.1986, d
 
 ### Images
 - `haian_mit_text_skaliert_rand.jpeg` (269,508 bytes) - Memorial photo with dates
+  - Dimensions: 700x1000 pixels
+  - No EXIF metadata found
+  - No trailing data after EOI marker
+  - LSB steganography analysis: negative (only noise patterns found)
+
+### HTTP/Network
+- Main page: 200 OK
+- Favicon: 404 Not Found
+- No additional assets loaded
+
+---
+
+## 3. Encoding & Hidden Data Analysis
+
+### HTML Analysis
+- **HTML Comments**: 1 found - contains disabled form (message_handler.php)
+- **Zero-width characters**: None detected
+- **Whitespace patterns**: 631 double spaces, 344 triple spaces, 37 tabs (likely formatting)
+- **Base64/Hex patterns**: None found
+- **Non-printable characters**: None found
+
+### Color Values (Potential ASCII Encoding)
+| Color | RGB | ASCII Mapping |
+|-------|-----|---------------|
+| #808080 | (128,128,128) | Non-printable |
+| #505050 | (80,80,80) | PPP |
+| #A0A0A0 | (160,160,160) | Non-printable |
+| #C0C0C0 | (192,192,192) | Non-printable |
+
+### Text Encoding Checks
+- No base64 strings detected in messages
+- No hex patterns found
+- Unicode characters present (German umlauts: ä, ö, ü, ß) - normal for German text
+
+---
+
+## 4. Cryptographic Analysis
+
+### Numbers Found in Messages
+| Number | Source | Context | ASCII |
+|--------|--------|---------|-------|
+| 24 | Ihno's message | Skat bid "bis 24 zu reizen" | Control char |
+| 120 | Ihno's message | Game value "120 drin gewesen" | 'x' |
+| 100 | Sven's message | "100% er selbst war" | 'd' |
+| 55 | Thomas's message | "55 - 60 jahren" | '7' |
+| 60 | Thomas's message | "55 - 60 jahren" | '<' |
+
+### Date Analysis
+- **Birth**: 30.10.1986
+- **Death**: 20.10.2011
+- **Age**: 24 years, 11 months, 20 days (almost 25)
+- **Days lived**: 9,131 days (23 × 397)
+
+### Timestamp Pattern (27 messages)
+- Hours sum: 423
+- Minutes sum: 794
+- No obvious ASCII patterns from timestamps
+
+### Mathematical Relationships
+- 120 - 24 = 96
+- 60 - 55 = 5
+- 120 / 24 = 5
+- 23 × 397 = 9131 (days lived)
+
+---
+
+## 5. Steganography Analysis
+
+### Image Analysis Complete
+- **JPEG structure**: Standard markers, no anomalies
+- **APP segments**: Only APP0 (JFIF header) found
+- **Comment segments (COM)**: None found
+- **Hidden strings**: None detected
+- **LSB distribution**: Normal (Y channel has natural distribution, Cb/Cr are constant 128)
+- **Conclusion**: No steganography detected in image
+
+### Pixel Pattern Analysis
+- **Dark pixels (0-127)**: ~550,000 (78.5% of image)
+- **Light pixels (128-255)**: ~150,000 (21.5% of image)
+- **Total pixels**: 700,000 (700 × 1000)
+- Pixel value **24**: 10,212 occurrences
+- Pixel value **120**: 1,842 occurrences
+- Pixel value **5**: 293 occurrences
+
+### HTML Whitespace Stego
+- No SNOW/whitespace encoding detected
+- Double/triple spaces appear to be normal HTML formatting
+
+---
+
+## 6. Linguistic & Pattern Analysis
+
+### First Letters (Acrostic)
+**Message first letters**: "IIHOSMAIINNSJSCNSKNDTDMBIMCSMSEHD"
+- No meaningful German or English words detected
+
+**Author initials**: "AJJSMAIMNSJISSNCSBNTDBBCEMI"
+- No meaningful pattern detected
+
+### Word Frequency (Top 10)
+1. und (44)
+2. du (43)
+3. ich (40)
+4. in (40)
+5. die (27)
+6. dir (24)
+7. dich (22)
+8. wir (20)
+9. zu (20)
+10. mit (20)
+
+### Poker/Skat References
+Multiple messages reference poker/Skat:
+- Alan Sheffler: "good poker player"
+- Nicholas Syhler: "poker coach", "poker or politics"
+- Ihno: "Leidenschaft für Poker", "Skat-Abende", "bis 24 zu reizen", "120 drin"
+- Svenja: "Pockertisch" (typo for Pokertisch)
+- Basti: "LAN-Parties", "Skat-Runden"
+
+**Skat Analysis:**
+- 24 = Grand bid value (12 × 2)
+- 120 = Grand Ouvert value (12 × 10)
+- 120 / 24 = 5 (multiplier ratio)
+
+### Foreign Language
+- "Jeg elsker deg" (Norwegian, Svenja's message) = "I love you"
+
+---
+
+## 7. Network & Path Analysis
+
+### Attempted Paths
+| Path | Result |
+|------|--------|
+| /robots.txt | 404 |
+| /sitemap.xml | 404 |
+| /.htaccess | ERR_ABORTED |
+| /admin | Auth required (401) |
+| /message_handler.php | ERR_ABORTED |
+| /24 | 404 |
+| /5 | 404 |
+| /x | ERR_ABORTED |
+| /96 | ERR_ABORTED |
+| /120 | 404 |
+| /grand | ERR_ABORTED |
+| /ouvert | ERR_ABORTED |
+
+### Discovery
+- `/admin` requires authentication (potential puzzle entry point)
+- Server responds differently to some paths (ERR_ABORTED vs 404)
+
+---
+
+## 8. Active Hypotheses
+
+### H1: The number 5 is the key
+**Evidence:**
+- 120 / 24 = 5 (Skat game value ratio)
+- 60 - 55 = 5 (from Thomas's message)
+- 120 = 24 × 5 (Grand Ouvert is 5× Grand)
+- This may indicate the answer or a key to the puzzle
+
+**Status**: Primary hypothesis
+
+### H2: The `/admin` path is the entry point
+**Evidence:**
+- Returns 401 (auth required) instead of 404
+- Different response than other paths suggests it's an active endpoint
+
+**Potential credentials:**
+- Username: `haian`, `admin`, `fabian`, or `5`
+- Password: `5`, `120`, `24`, `9131`
+
+**Status**: Active investigation
+
+### H3: Days lived calculation (9131) is significant
+**Evidence:**
+- 23 × 397 = 9131 days
+- 23 and 397 are both prime numbers
+- May encode additional information
+
+**Status**: Under investigation
+
+---
+
+## 9. Key Findings Summary
+
+### Numbers with Potential Significance
+| Number | Source | Significance |
+|--------|--------|--------------|
+| 5 | Math (120/24, 60-55) | **Primary hypothesis - THE KEY** |
+| 24 | Ihno's message | Skat Grand bid value |
+| 120 | Ihno's message | Skat Grand Ouvert value |
+| 9131 | Date calculation | Days lived (23 × 397) |
+| 23 | Prime factor | Days lived factor |
+| 397 | Prime factor | Days lived factor |
+
+### What Has Been Ruled Out
+- ❌ Image steganography (LSB, EXIF, trailing data)
+- ❌ HTML encoding (zero-width chars, base64, hex)
+- ❌ Acrostic patterns (first/last letters)
+- ❌ Simple path enumeration (/24, /120, /5 all return 404)
+
+### What Needs Investigation
+- ⏳ `/admin` authentication (401 response)
+- ⏳ Pixel coordinate patterns
+- ⏳ Row/column encoding in image
+- ⏳ Advanced Skat game mechanics
+
+---
+
+## 10. Analysis Scripts Created
+
+| Script | Purpose |
+|--------|---------|
+| `analyze_image.py` | EXIF, LSB, JPEG structure analysis |
+| `analyze_text.py` | Text patterns, acrostic, word frequency |
+| `analyze_html.py` | HTML encoding, whitespace, comments |
+| `analyze_numbers.py` | Number patterns, date calculations |
+| `advanced_patterns.py` | Skat analysis, date significance |
+| `advanced_stego.py` | JPEG marker analysis, DCT coefficients |
+| `pixel_analysis.py` | Light/dark pixel counts |
+| `advanced_pixel.py` | Row/column patterns, coordinate encoding |
+
+---
+
+## 11. Next Steps
+
+1. **Continue `/admin` authentication attempts** with various credential combinations
+2. **Deep pixel coordinate analysis** - check if (x,y) positions of specific values encode data
+3. **Row/column encoding** - analyze if dark/light patterns per row/column form a message
+4. **Investigate 9131** - explore significance of days lived calculation
+5. **Test credentials**: `admin/5`, `haian/5`, `fabian/5`, `5/5`, `admin/9131`
+
+---
+
+*Report generated following AGENTS.md protocol - Last updated 2025-03-28*
+
+This is a memorial webpage for **Fabian "Haian" Schüßler** (born 30.10.1986, died 20.10.2011 at age 24).
+
+### Page Structure
+- Single static HTML page with memorial image
+- 27 condolence messages from friends and family
+- German primary language with English translation
+- Gray color scheme (#A0A0A0 background, #808080/#505050 message boxes)
+- No active server-side forms (message submission disabled)
+
+---
+
+## 2. Assets Catalog
+
+### Images
+- `haian_mit_text_skaliert_rand.jpeg` (269,508 bytes) - Memorial photo with dates
   - No EXIF metadata found
   - No trailing data after EOI marker
   - LSB steganography analysis: negative (only 0xFF patterns found)
