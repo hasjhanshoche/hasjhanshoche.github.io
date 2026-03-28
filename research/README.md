@@ -158,21 +158,32 @@ Multiple messages reference poker/Skat:
 
 ## 8. Active Hypotheses
 
+### Number 5 Significance
+Multiple mathematical relationships yield the number 5:
+- 120 / 24 = 5 (Skat game value ratio)
+- 60 - 55 = 5 (from Thomas's message)
+- This may indicate the answer or a key to the puzzle
+
+### Skat Game Values Deep Dive
+From Ihno's message: "Dein Blatt war so viel besser, als nur bis 24 zu reizen, damit wären auch durchaus 120 drin gewesen"
+
+**24 and 120 are both Grand game values:**
+- 24 = Grand with multiplier 2 (12 × 2)
+- 120 = Grand with multiplier 10, also called "Grand Ouvert" (12 × 10)
+- 120 = 24 × 5
+
+**Isabella's message date**: 24.02.2012
+- Day 24 matches the Skat number
+- Posted on 24th day of month
+
 ### H1: The `/admin` path is the entry point
 - **Evidence**: Returns 401 (auth required) instead of 404
-- **Status**: Active - need to find credentials
+- **Potential credentials**: haian/5, admin/5, fabian/5, 24/120, 120/24
+- **Status**: Active - need to test credential combinations
 
-### H2: Numbers 24, 120, 55-60 encode credentials
-- **Evidence**: 120-24=96, 60-55=5, 120/24=5
-- **Status**: Active - need to test combinations
-
-### H3: Poker references contain hidden message
-- **Evidence**: Multiple poker/Skat references with specific numbers
-- **Status**: Active - analyzing 24 and 120 as Skat game values
-
-### H4: Birth/death dates encode solution
-- **Evidence**: 30101986, 20102011, age 24
-- **Status**: Active - need to test as passwords
+### H2: The number 5 is the key
+- **Evidence**: 120/24=5, 60-55=5, Grand multiplier ratio
+- **Status**: Active - testing as password for /admin
 
 ---
 
