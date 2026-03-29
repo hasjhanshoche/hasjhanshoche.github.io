@@ -2,10 +2,10 @@
 """
 Analyze lines and columns overflown by white text in the memorial image
 The white text (birth/death dates) appears as high-brightness pixels
+Uses only PIL (no numpy required)
 """
 
 from PIL import Image
-import numpy as np
 
 IMAGE_PATH = "images/haian_mit_text_skaliert_rand.jpeg"
 
@@ -29,8 +29,8 @@ def analyze_white_text_regions():
     # Find rows (lines) that contain white pixels
     white_rows = []
     for row in range(height):
-        row_pixels = pixels[row, :]
-        white_count = np.sum(row_pixels > white_threshold)
+        row_pixels = pixels[row*width:(row+1)*width]
+        white_count = sum(1 for p in row_pixels if p > white_threshold)
         if white_count > 10:  # At least 10 white pixels to be text
             white_rows.append((row, white_count))
     
