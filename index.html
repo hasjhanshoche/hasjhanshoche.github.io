@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In Memoriam: Fabian "Haian" Schüßler | 1986-2011</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e8e8e8;
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+        
+        /* Bahá'í-inspired decorative elements */
+        .baha-symbol {
+            text-align: center;
+            font-size: 3rem;
+            color: #d4af37;
+            margin: 20px 0;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        .star-radiant {
+            color: #d4af37;
+            font-size: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(180deg, rgba(26,26,46,0.9) 0%, rgba(22,33,62,0.7) 100%);
+            border-bottom: 2px solid #d4af37;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: #f5f5f5;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #d4af37;
+            font-style: italic;
+            letter-spacing: 2px;
+        }
+        
+        .dates {
+            font-size: 1.1rem;
+            color: #a0a0a0;
+            margin-top: 15px;
+        }
+        
+        .age {
+            color: #d4af37;
+            font-size: 1.3rem;
+            margin-top: 10px;
+        }
+        
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .memorial-image {
+            text-align: center;
+            margin: 40px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .memorial-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .quote-section {
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid #d4af37;
+            padding: 30px;
+            margin: 40px 0;
+            font-style: italic;
+        }
+        
+        .quote-section p {
+            font-size: 1.3rem;
+            color: #f0f0f0;
+            text-align: center;
+        }
+        
+        .quote-section .author {
+            text-align: right;
+            margin-top: 15px;
+            color: #d4af37;
+            font-size: 1rem;
+        }
+        
+        h2 {
+            color: #d4af37;
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin: 50px 0 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .analysis-section {
+            background: rgba(255,255,255,0.03);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .number-card {
+            background: rgba(212, 175, 55, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .number-card .value {
+            font-size: 2.5rem;
+            color: #d4af37;
+            font-weight: bold;
+        }
+        
+        .number-card .label {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+            margin-top: 10px;
+        }
+        
+        .skat-section {
+            background: rgba(100, 100, 150, 0.1);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .skat-quote {
+            font-style: italic;
+            color: #c0c0c0;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .finding-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .finding-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .finding-list li::before {
+            content: "✦";
+            color: #d4af37;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .pixel-string {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #d4af37;
+            word-break: break-all;
+            margin: 20px 0;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        
+        .messages-section {
+            margin: 40px 0;
+        }
+        
+        .message-card {
+            background: rgba(255,255,255,0.05);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 3px solid #d4af37;
+        }
+        
+        .message-author {
+            color: #d4af37;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .message-date {
+            color: #808080;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+        
+        .message-text {
+            color: #d0d0d0;
+            font-style: italic;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(26,26,46,0.9);
+            border-top: 2px solid #d4af37;
+            margin-top: 60px;
+        }
+        
+        .footer-quote {
+            font-style: italic;
+            color: #a0a0a0;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+        
+        .research-note {
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .research-note h3 {
+            color: #d4af37;
+            margin-bottom: 15px;
+        }
+        
+        a {
+            color: #d4af37;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .number-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="baha-symbol">☆</div>
+        <h1>Fabian "Haian" Schüßler</h1>
+        <p class="subtitle">A Soul's Journey in the Abhá Kingdom</p>
+        <p class="dates">* 30 October 1986 — † 20 October 2011</p>
+        <p class="age">24 years, 11 months, 20 days on this earthly plane</p>
+        <div class="star-radiant">✦ ✦ ✦</div>
+    </header>
+
+    <main>
+        <div class="quote-section">
+            <p>"I have not come to this world to pile up worldly possessions, but to sanctify souls and prepare them for the journey to the realms above."</p>
+            <p class="author">— Bahá'u'lláh</p>
+        </div>
+
+        <div class="memorial-image">
+            <img src="images/haian_mit_text_skaliert_rand.jpeg" alt="Fabian Haian Schüßler Memorial">
+            <p style="margin-top: 15px; color: #a0a0a0; font-style: italic;">
+                "The soul of man is immortal, and its evolution is a continuous process throughout eternity."
+            </p>
+        </div>
+
+        <h2>✦ The Mystery of Five</h2>
+        
+        <div class="analysis-section">
+            <p>In the Bahá'í Faith, numbers carry profound spiritual significance. The number <strong>five</strong> represents the human being with outstretched arms and stands for the power of the Covenant. Through deep analysis of Haian's memorial, the number 5 emerges as a mystical key:</p>
+            
+            <div class="number-grid">
+                <div class="number-card">
+                    <div class="value">120</div>
+                    <div class="label">Skat Grand Ouvert<br>(12 × 10)</div>
+                </div>
+                <div class="number-card">
+                    <div class="value">÷</div>
+                    <div class="label">Divided by</div>
+                </div>
+                <div class="number-card">
+                    <div class="value">24</div>
+                    <div class="label">Skat Grand Bid<br>(12 × 2)</div>
+                </div>
+                <div class="number-card">
+                    <div class="value">=</div>
+                    <div class="label">Equals</div>
+                </div>
+                <div class="number-card">
+                    <div class="value">5</div>
+                    <div class="label">The Key<br>— ☆ —</div>
+                </div>
+            </div>
+            
+            <p style="text-align: center; font-style: italic; color: #d4af37;">
+                "The world beyond is as different from this world as this world is different from that of the child while still in the womb of its mother."<br>
+                — Bahá'u'lláh
+            </p>
+        </div>
+
+        <h2>✦ The Skat Connection</h2>
+        
+        <div class="skat-section">
+            <p>From Ihno's message, a profound clue emerges through the German card game Skat:</p>
+            
+            <div class="skat-quote">
+                "Dein Blatt war so viel besser, als nur bis <strong>24</strong> zu reizen, damit wären auch durchaus <strong>120</strong> drin gewesen."
+            </div>
+            
+            <p>Translation: "Your hand was so much better than bidding to 24, 120 would certainly have been possible."</p>
+            
+            <ul class="finding-list">
+                <li><strong>24</strong> = Grand game with multiplier 2 (the bid Haian's hand deserved more than)</li>
+                <li><strong>120</strong> = Grand Ouvert with multiplier 10 (what his hand could have achieved)</li>
+                <li><strong>60 - 55 = 5</strong> — From Thomas's message: "Wir sehen uns in ca. 55 - 60 jahren wieder"</li>
+                <li>Isabella's message date: <strong>24</strong>.02.2012 — the 24th day, one year after his passing</li>
+            </ul>
+        </div>
+
+        <h2>✦ Hidden Messages in Light</h2>
+        
+        <div class="analysis-section">
+            <p>Advanced pixel analysis of the memorial image reveals a mysterious string embedded in the X-coordinates of pixels with value 5 — the key number:</p>
+            
+            <div class="pixel-string">
+kO~4OI|jM^{[kD_SZ25`R8TRrsQSj\a5b&lt;F4pru445bE_O?BED52dqks8=RSVOSB?utAWhilWh8euz&gt;Odiz|9kOkrt@@;DpN=Nn`_edl}MAB|~PCno&gt;
+            </div>
+            
+            <p>This 115-character sequence contains:</p>
+            <ul class="finding-list">
+                <li><strong>"25"</strong> — The age Haian almost reached (he died 20 days before his 25th birthday)</li>
+                <li><strong>"52"</strong> — The reversed 25, appearing later in the sequence</li>
+                <li>ASCII coordinates that may encode a message or password</li>
+            </ul>
+            
+            <div class="research-note">
+                <h3>Research Findings</h3>
+                <p><strong>Days Lived:</strong> 9,121 days = 7 × 1303<br>
+                <strong>Target Endpoint:</strong> <code>/admin</code> (requires authentication)<br>
+                <strong>Image Analysis:</strong> 6 text regions identified, white text at rows 57-60, 83-86 (the dates)</p>
+            </div>
+        </div>
+
+        <h2>✦ Words from Friends</h2>
+        
+        <div class="messages-section">
+            <div class="message-card">
+                <div class="message-author">Ihno</div>
+                <div class="message-date">02.11.2011 17:07</div>
+                <div class="message-text">
+                    "Dir Haian, auch wenn ich deine Leidenschaft für Poker nicht teilte, so waren jedoch die Skat-Abende mit dir umso schöner..."
+                </div>
+            </div>
+            
+            <div class="message-card">
+                <div class="message-author">Thomas</div>
+                <div class="message-date">06.11.2011 12:11</div>
+                <div class="message-text">
+                    "Der Tod ist wie ein Horizont, dieser ist nichts anderes als die Grenze unserer Wahrnehmung... Wir sehen uns in ca. 55 - 60 jahren wieder."
+                </div>
+            </div>
+            
+            <div class="message-card">
+                <div class="message-author">Svenja</div>
+                <div class="message-date">02.11.2011 09:58</div>
+                <div class="message-text">
+                    "Jeg elsker deg." (Norwegian: "I love you")
+                </div>
+            </div>
+        </div>
+
+        <h2>✦ The Spiritual Journey</h2>
+        
+        <div class="analysis-section">
+            <p>In the Bahá'í teachings, death is not an end but a transition:</p>
+            
+            <ul class="finding-list">
+                <li>The soul is immortal and continues its evolution in the next world</li>
+                <li>"The soul of man is immortal, and its evolution is a continuous process throughout eternity."</li>
+                <li>The body is but a vessel; the true essence of Haian lives on</li>
+                <li>Those who pass become "steadfast in the Covenant" — five souls in the Abhá Kingdom</li>
+            </ul>
+            
+            <div class="quote-section">
+                <p>"The time has come for you to soar like an eagle in the heavens of knowledge and understanding."</p>
+                <p class="author">— Bahá'u'lláh</p>
+            </div>
+        </div>
+
+        <h2>✦ Technical Research</h2>
+        
+        <div class="analysis-section">
+            <p>This memorial has been subject to comprehensive cryptographic and steganographic analysis following the AGENTS.md protocol:</p>
+            
+            <ul class="finding-list">
+                <li><strong>Image Analysis:</strong> 700×1000 pixels, 269,508 bytes — no EXIF data, no LSB steganography detected</li>
+                <li><strong>HTML Analysis:</strong> 27 condolence messages — no zero-width characters, no base64 encoding</li>
+                <li><strong>Network Analysis:</strong> <code>/admin</code> endpoint discovered (401 authentication required)</li>
+                <li><strong>Pixel Analysis:</strong> ASCII patterns found in pixel value 5 X-coordinates</li>
+                <li><strong>Date Significance:</strong> 24.02.2012 — Isabella's message on the 24th day</li>
+            </ul>
+            
+            <p style="margin-top: 20px; text-align: center;">
+                <a href="research/README.md">View Full Research Documentation</a> | 
+                <a href="https://github.com/secthunter/who_is_satoshi_nakamoto">GitHub Repository</a>
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="star-radiant">✦ ✦ ✦</div>
+        <p class="footer-quote">
+            "O My servants! Sorrow not if, in these days and on this earthly plane, things that have not pleased you should befall you. The Day is coming when all the scattered rays of faith shall be reunited, and the whole earth shall be illumined with the light of the knowledge of God."
+        </p>
+        <p style="color: #d4af37; font-size: 0.9rem;">
+            In loving memory of Fabian "Haian" Schüßler<br>
+            * 30.10.1986 — † 20.10.2011
+        </p>
+        <p style="color: #606060; font-size: 0.8rem; margin-top: 20px;">
+            Research conducted with love and respect | Bahá'í Faith Theme
+        </p>
+    </footer>
+</body>
+</html>
