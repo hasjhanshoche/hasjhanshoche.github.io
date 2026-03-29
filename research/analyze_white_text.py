@@ -13,7 +13,7 @@ def analyze_white_text_regions():
     """Identify and analyze regions with white text"""
     img = Image.open(IMAGE_PATH).convert('L')
     width, height = img.size
-    pixels = np.array(img)
+    pixels = list(img.getdata())
     
     print("="*70)
     print("WHITE TEXT REGION ANALYSIS")
@@ -55,18 +55,14 @@ def analyze_white_text_regions():
         start_row = region[0][0]
         end_row = region[-1][0]
         print(f"  Region {i+1}: Rows {start_row}-{end_row} ({len(region)} lines)")
-        
-        # Analyze this region's pixels
-        region_pixels = pixels[start_row:end_row+1, :]
-        print(f"    Brightness range: {region_pixels.min()}-{region_pixels.max()}")
-        print(f"    Mean brightness: {region_pixels.mean():.2f}")
-        print(f"    White pixels (>200): {np.sum(region_pixels > 200)}")
+    
+    return white_rows
 
-def extract_text_line_data():
+def extract_text_line_data(white_rows):
     """Extract pixel data from lines containing white text"""
     img = Image.open(IMAGE_PATH).convert('L')
     width, height = img.size
-    pixels = np.array(img)
+    pixels = list(img.getdata())
     
     print("\n" + "="*70)
     print("TEXT LINE PIXEL DATA EXTRACTION")
@@ -74,26 +70,23 @@ def extract_text_line_data():
     
     white_threshold = 200
     
-    # Find all rows with significant white pixels
-    text_rows = []
-    for row in range(height):
-        row_data = pixels[row, :]
-        white_pixels = row_data[row_data > white_threshold]
-        if len(white_pixels) > 20:  # Significant text line
-            text_rows.append(row)
+    print(f"Analyzing {len(white_rows)} text-heavy rows:")
     
-    print(f"Found {len(text_rows)} text-heavy rows")
+    # Collect all X positions from white text rows
+    all_x_positions = []
+    all_pixel_values = []
     
-    # Extract ASCII from these specific rows
-    print("\nAnalyzing white text rows for patterns:")
-    
-    for idx, row in enumerate(text_rows[:20]):  # First 20 text rows
-        row_data = pixels[row, :]
+    for idx, (row, count) in enumerate(white_rows[:30]):  # First 30 text rows
+        row_data = pixels[row*width:(row+1)*width]
         
         # Get positions of white pixels
-        white_positions = np.where(row_data > white_threshold)[0]
+        white_positions = [i for i, p in enumerate(row_data) if p > white_threshold]
+        white_values = [p for p in row_data if p > white_threshold]
         
-        if len(white_positions) > 0:
+        all_x_positions.extend(white_positions)
+        all_pixel_values.extend(white_values)
+        
+        if white_positions:
             # Check if positions map to ASCII
             ascii_chars = []
             for pos in white_positions:
@@ -102,20 +95,24 @@ def extract_text_line_data():
             
             # Check pixel values as ASCII
             pixel_ascii = []
-            for val in row_data[row_data > white_threshold]:
+            for val in white_values:
                 if 32 <= val <= 126:
-                    pixel_ascii.append(chr(int(val)))
+                    pixel_ascii.append(chr(val))
             
-            if ascii_chars or pixel_ascii:
+            if len(ascii_chars) > 0 or len(pixel_ascii) > 0:
                 print(f"\nRow {row}:")
-                print(f"  White pixel positions (ASCII): {''.join(ascii_chars[:30])}")
-                print(f"  White pixel values (ASCII): {''.join(pixel_ascii[:30])}")
+                if ascii_chars:
+                    print(f"  X positions (ASCII): {''.join(ascii_chars[:40])}")
+                if pixel_ascii:
+                    print(f"  Pixel values (ASCII): {''.join(pixel_ascii[:40])}")
+    
+    return all_x_positions, all_pixel_values
 
 def analyze_text_columns():
     """Analyze columns that contain white text pixels"""
     img = Image.open(IMAGE_PATH).convert('L')
     width, height = img.size
-    pixels = np.array(img)
+    pixels = list(img.getdata())
     
     print("\n" + "="*70)
     print("TEXT COLUMN ANALYSIS")
@@ -126,8 +123,8 @@ def analyze_text_columns():
     # Find columns with white pixels
     text_columns = []
     for col in range(width):
-        col_data = pixels[:, col]
-        white_count = np.sum(col_data > white_threshold)
+        col_pixels = [pixels[row*width + col] for row in range(height)]
+        white_count = sum(1 for p in col_pixels if p > white_threshold)
         if white_count > 5:  # Some white pixels in this column
             text_columns.append((col, white_count))
     
@@ -147,16 +144,18 @@ def analyze_text_columns():
         col_regions.append(current)
     
     print(f"Grouped into {len(col_regions)} column regions:")
-    for i, region in enumerate(col_regions[:10]):  # Show first 10
+    for i, region in enumerate(col_regions[:15]):  # Show first 15
         start = region[0][0]
         end = region[-1][0]
-        print(f"  Region {i+1}: Columns {start}-{end}")
+        print(f"  Region {i+1}: Columns {start}-{end} ({end-start+1} cols)")
+    
+    return text_columns
 
-def extract_text_coordinates():
+def extract_text_coordinates(white_rows):
     """Extract coordinates where white text appears and check for encoding"""
     img = Image.open(IMAGE_PATH).convert('L')
     width, height = img.size
-    pixels = np.array(img)
+    pixels = list(img.getdata())
     
     print("\n" + "="*70)
     print("WHITE TEXT COORDINATE ENCODING")
@@ -164,14 +163,15 @@ def extract_text_coordinates():
     
     white_threshold = 200
     
-    # Get all coordinates of white pixels
+    # Get all coordinates of white pixels from text rows
     white_coords = []
-    for row in range(height):
-        for col in range(width):
-            if pixels[row, col] > white_threshold:
+    for row, count in white_rows:
+        row_data = pixels[row*width:(row+1)*width]
+        for col, val in enumerate(row_data):
+            if val > white_threshold:
                 white_coords.append((col, row))  # (x, y)
     
-    print(f"Total white pixels: {len(white_coords)}")
+    print(f"Total white pixels in text rows: {len(white_coords)}")
     
     # Check if X coordinates (columns) encode ASCII
     x_coords = [x for x, y in white_coords]
@@ -179,66 +179,82 @@ def extract_text_coordinates():
     
     # Check if Y coordinates (rows) encode ASCII  
     y_coords = [y for x, y in white_coords]
-    y_ascii = [chr(y) for y in y_coords if 32 <= y <= 126]
+    y_ascii = [chr(y) for x, y in white_coords if 32 <= y <= 126]
     
     print(f"\nX coordinates as ASCII ({len(x_ascii)} chars):")
-    print(''.join(x_ascii[:100]))
+    print(''.join(x_ascii[:150]))
     
     print(f"\nY coordinates as ASCII ({len(y_ascii)} chars):")
-    print(''.join(y_ascii[:100]))
+    print(''.join(y_ascii[:150]))
     
-    # Try combinations
-    print("\n\nCombined X,Y as message:")
-    combined = []
-    for x, y in white_coords[:200]:
-        if 32 <= x <= 126:
-            combined.append(chr(x))
-        if 32 <= y <= 126:
-            combined.append(chr(y))
-    print(''.join(combined[:100]))
+    return white_coords
 
-def analyze_text_specific_values():
+def analyze_text_specific_values(all_pixel_values):
     """Analyze specific pixel values in white text regions"""
-    img = Image.open(IMAGE_PATH).convert('L')
-    width, height = img.size
-    pixels = np.array(img)
     
     print("\n" + "="*70)
     print("WHITE TEXT PIXEL VALUE ANALYSIS")
     print("="*70)
     
-    white_threshold = 200
-    
-    # Collect all white pixel values
-    white_values = []
-    for row in range(height):
-        row_data = pixels[row, :]
-        white_vals = row_data[row_data > white_threshold]
-        white_values.extend(white_vals.tolist())
-    
-    print(f"Total white pixel values collected: {len(white_values)}")
+    print(f"Total white pixel values collected: {len(all_pixel_values)}")
     
     # Check for specific values
-    unique_values = sorted(set(white_values))
+    unique_values = sorted(set(all_pixel_values))
     print(f"\nUnique white pixel values ({len(unique_values)}):")
     print(unique_values[:50])  # First 50
     
     # Check if any map to our target numbers
-    target_nums = [5, 24, 55, 60, 120, 25, 52]
+    target_nums = [5, 24, 55, 60, 120, 25, 52, 100]
     print(f"\nChecking for target values {target_nums}:")
     for target in target_nums:
-        count = white_values.count(target)
+        count = all_pixel_values.count(target)
         if count > 0:
             print(f"  Value {target}: {count} occurrences")
     
     # Check ASCII mapping of white values
-    ascii_from_values = [chr(int(v)) for v in white_values if 32 <= v <= 126]
+    ascii_from_values = [chr(int(v)) for v in all_pixel_values if 32 <= v <= 126]
     print(f"\nWhite values as ASCII ({len(ascii_from_values)} chars):")
     print(''.join(ascii_from_values[:100]))
 
+def analyze_text_rows_deep(white_rows):
+    """Deep analysis of text rows - check for hidden messages"""
+    img = Image.open(IMAGE_PATH).convert('L')
+    width, height = img.size
+    pixels = list(img.getdata())
+    
+    print("\n" + "="*70)
+    print("DEEP TEXT ROW ANALYSIS")
+    print("="*70)
+    
+    white_threshold = 200
+    
+    # Get all X positions from white text rows
+    all_x_positions = []
+    for row, count in white_rows:
+        row_data = pixels[row*width:(row+1)*width]
+        white_positions = [i for i, p in enumerate(row_data) if p > white_threshold]
+        all_x_positions.extend(white_positions)
+    
+    print(f"Collected {len(all_x_positions)} X positions from white text")
+    
+    # Check for patterns in X positions
+    # Try every nth position
+    for n in [2, 3, 4, 5, 6, 7, 8]:
+        nth_positions = all_x_positions[::n]
+        nth_ascii = [chr(x) for x in nth_positions if 32 <= x <= 126]
+        if len(nth_ascii) > 5:
+            print(f"\nEvery {n}th X position as ASCII: {''.join(nth_ascii[:50])}")
+    
+    # Check differences between consecutive positions
+    diffs = [all_x_positions[i+1] - all_x_positions[i] for i in range(len(all_x_positions)-1)]
+    diff_ascii = [chr(d + 64) if 32 <= (d + 64) <= 126 else '?' for d in diffs if d < 64]
+    if diff_ascii:
+        print(f"\nDifferences as ASCII: {''.join(diff_ascii[:50])}")
+
 if __name__ == "__main__":
-    analyze_white_text_regions()
-    extract_text_line_data()
-    analyze_text_columns()
-    extract_text_coordinates()
-    analyze_text_specific_values()
+    white_rows = analyze_white_text_regions()
+    x_positions, pixel_values = extract_text_line_data(white_rows)
+    text_columns = analyze_text_columns()
+    white_coords = extract_text_coordinates(white_rows)
+    analyze_text_specific_values(pixel_values)
+    analyze_text_rows_deep(white_rows)

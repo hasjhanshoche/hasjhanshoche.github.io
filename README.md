@@ -232,11 +232,26 @@ Tested parameters (key, password, flag, debug, admin) - **no effect on response*
 4. **Thomas's numbers** - "55 - 60 jahren" = difference of 5
 5. **Skat references** - 24, 120, game values with 5× relationship
 
-### Secondary Clues
-- Image dimensions: 700×1000 (7 and 1000 - no obvious significance)
-- File size: 269,508 bytes (no obvious pattern)
-- 27 condolence messages (no obvious significance)
-- Norwegian phrase "Jeg elsker deg" (I love you) - potential significance
+### White Text Region Analysis
+Analysis of lines/columns containing white text (birth/death dates and name):
+
+**6 Text Regions Identified:**
+| Region | Rows | Lines | Content |
+|--------|------|-------|---------|
+| 1 | 57-60 | 4 | Top name text |
+| 2 | 83-86 | 4 | Birth/death dates |
+| 3 | 107-108 | 2 | Additional text |
+| 4 | 232 | 1 | Isolated element |
+| 5 | 802-824 | 23 | Bottom text |
+| 6 | 868-890 | 23 | Bottom text |
+
+**Findings:**
+- ❌ **X coordinates do NOT encode ASCII** (columns 250-444, outside ASCII range)
+- ❌ **No target values (5, 24, 55, 60, 120) found** in white pixel values
+- ❌ **Y coordinates map to ASCII** but appear coincidental (row numbers naturally in ASCII range)
+- ❌ **White pixel values** (201-250) do not encode to ASCII
+
+**Conclusion:** The visible white text does not contain additional hidden encoded data.
 
 ---
 
